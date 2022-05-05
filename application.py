@@ -30,34 +30,35 @@ def loginProcesspage():
         prediction = text_clf_svm.predict(nm_list)
         probability = np.amax(text_clf_svm.predict_proba(nm_list), axis=1)
         probability_float = float(probability)
-
+        predictionWord = "Your comment is [" + nm_string + "]."
 
         # make some rules:
         # 全数字，长度为0，输入的为空格，纯字母
         if nm.isdigit()==True or len(nm)==0 or nm.isspace()==True or nm.isalpha():
-            probability_float = 0.1
+            probability_float = 10
 
-        if probability_float > 0.9:
-            probability_msg = " and the probability > 90%"
-        elif probability_float > 0.8:
-            probability_msg = " and the probability > 80%"
-        elif probability_float > 0.7:
-            probability_msg = " and the probability > 70%"
-        elif probability_float > 0.6:
-            probability_msg = " and the probability > 60%"
-        elif probability_float > 0.5:
-            probability_msg = " and the probability > 50%"
+        if prediction == 'OR' and probability_float > 0.7:
+            probability_msg = "http://smartbuyers.ml/wp-content/uploads/2022/05/smiling.png"
+            user_tips = "After our system determining, this comment is a fact comment and you can trust it."
+
+        elif prediction == 'OR' and 0.7 >= probability_float:
+            probability_msg = "http://smartbuyers.ml/wp-content/uploads/2022/05/thinking.png"
+            user_tips = "After our system determining, this comment may be a fact one but can't fully trust it."
+
+        elif prediction == 'CG':
+            probability_msg = "http://smartbuyers.ml/wp-content/uploads/2022/05/angry.png"
+            user_tips = "After our system determining, this comment is a fake comment."
+
         else:
             probability_msg = " "
+            user_tips = " "
 
-        if probability_float == 0.1:
-            predictionWord = "It may be a invalid review, Please input again."
-        else:
-            if prediction == 'OR':
-                predictionWord = "[" + nm_string + '] may be a Fact comment, '
-            else:
-                predictionWord = "[" + nm_string + '] may be a Computer Generated comment, '
-        return render_template("result.html", data=predictionWord, data1=probability_msg)  # 调用render_template函数，传入html文件参数
+        if probability_float == 10:
+            predictionWord = "It may be a invalid review, Please give me a review again."
+            probability_msg = "http://smartbuyers.ml/wp-content/uploads/2022/05/thinking.png"
+            user_tips = ""
+
+        return render_template("result.html", data=predictionWord, data1=probability_msg, data2=user_tips)  # 调用render_template函数，传入html文件参数
 
 
 if __name__=="__main__":
