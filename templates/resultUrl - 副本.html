@@ -25,7 +25,6 @@ p.new2 {
 <link rel='dns-prefetch' href='//s.w.org' />
 <link rel="alternate" type="application/rss+xml" title="SmartBuyers &raquo; Feed" href="https://smartbuyers.ml/feed/" />
 <link rel="alternate" type="application/rss+xml" title="SmartBuyers &raquo; Comments Feed" href="https://smartbuyers.ml/comments/feed/" />
-
 <script type="text/javascript">
 window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/smartbuyers.ml\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.9.3"}};
 /*! This file is auto-generated */
@@ -109,8 +108,8 @@ Enjoy online shopping with less risks </p>
 <div class="menu-main-menu-container"><ul id="menu-main-menu" class="menu"><li id="menu-item-849" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-849"><a href="https://smartbuyers.ml/">Home</a></li>
 <li id="menu-item-850" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-850"><a>Checker</a>
 <ul class="sub-menu">
-<li id="menu-item-1033" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1033"><a href="./">Check a review</a></li>
-<li id="menu-item-1034" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1034"><a href="./checkUrl">Check Amazon Products</a></li>
+<li id="menu-item-1033" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1033"><a href="http://smartbuyer.ml/">Check a review</a></li>
+<li id="menu-item-1034" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1034"><a href="http://smartbuyer.ml/checkUrl">Check Amazon Products</a></li>
 </ul>
 </li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-77"><a href="https://smartbuyers.ml/risk/">Risks</a></li>
@@ -128,8 +127,8 @@ Enjoy online shopping with less risks </p>
 <div class="menu-main-menu-container"><ul id="menu-main-menu" class="menu"><li id="menu-item-849" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-849"><a href="https://smartbuyers.ml/">Home</a></li>
 <li id="menu-item-850" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-850"><a>Checker</a>
 <ul class="sub-menu">
-<li id="menu-item-1033" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1033"><a href="./">Check a review</a></li>
-<li id="menu-item-1034" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1034"><a href="./checkUrl">Check Amazon Products</a></li>
+<li id="menu-item-1033" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1033"><a href="http://smartbuyer.ml/">Check a review</a></li>
+<li id="menu-item-1034" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1034"><a href="http://smartbuyer.ml/checkUrl">Check Amazon Products</a></li>
 </ul>
 </li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-77"><a href="https://smartbuyers.ml/risk/">Risks</a></li>
@@ -139,6 +138,23 @@ Enjoy online shopping with less risks </p>
 </ul></div> </nav>
 </div>
 </header>
+
+<body>
+<center>
+    <div style="height: 200px">
+    </div>
+    <h1>Result of Identifying Content</h1>
+    <br>
+    <br>
+    <img src= {{data1}} width="100" height="100" />
+    <br>
+    <br>
+    <p class = "new">{{data}}</p>
+    <p class = "new2">{{data2}}</p>
+    <a href="http://smartbuyer.ml" title="Back" target="_blank">Back</a>
+</center>
+</body>
+</html>
 
 <!DOCTYPE html>
 
@@ -158,22 +174,11 @@ Enjoy online shopping with less risks </p>
 }
 
 /* Create four equal columns that floats next to each other */
-
-.row {
-  width: 75%;
-  padding: 10px;
-}
-
 .column {
   float: left;
-  width: 33%;
+  width: 25%;
   padding: 10px;
   height: 300px; /* Should be removed. Only for demonstration */
-}
-
-.comments {
-  width: 75%;
-  padding: 10px;
 }
 
 /* Clear floats after the columns */
@@ -213,227 +218,78 @@ Enjoy online shopping with less risks </p>
 	padding-left: 20px;
 	margin-left:30px;
 }
-
-/* progress */
-@-webkit-keyframes
-@-webkit-keyframes
-load { 0% {
-stroke-dashoffset:0
-}
-}
-@-moz-keyframes
-load { 0% {
-stroke-dashoffset:0
-}
-}
-@keyframes
-load { 0% {
-stroke-dashoffset:0
-}
-}
-
-.progress {
-  position: relative;
-  display: inline-block;
-  padding: 0;
-  text-align: center;
-}
-
-.progress>li {
-  display: inline-block;
-  position: relative;
-  text-align: center;
-  color: #93A2AC;
-  font-family: Lato;
-  font-weight: 100;
-  margin: 2rem;
-}
-
-.progress>li:before {
-  content: attr(data-name);
-  position: absolute;
-  width: 100%;
-  bottom: -2rem;
-  font-weight: 400;
-}
-
-.progress>li:after {
-  content: attr(data-percent);
-  position: absolute;
-  width: 100%;
-  top: 3.7rem;
-  left: 0;
-  font-size: 2rem;
-  text-align: center;
-}
-
-.progress svg {
-  width: 10rem;
-  height: 10rem;
-}
-
-.progress svg:nth-child(2) {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: rotate(-90deg);
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-}
-
-.progress svg:nth-child(2) path {
-  fill: none;
-  stroke-width: 25;
-  stroke-dasharray: 629;
-  stroke: rgba(255, 255, 255, 0.9);
-  -webkit-animation: load 10s;
-  -moz-animation: load 10s;
-  -o-animation: load 10s;
-  animation: load 10s;
-}
 </style>
 
-<!--  Defining Angle Gradient Colors  -->
-<svg width="0" height="0">
-<defs>
-  <linearGradient id="cl1" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1">
-    <stop stop-color="#618099"/>
-    <stop offset="100%" stop-color="#8e6677"/>
-  </linearGradient>
-  <linearGradient id="cl2" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
-    <stop stop-color="#8e6677"/>
-    <stop offset="100%" stop-color="#9b5e67"/>
-  </linearGradient>
-  <linearGradient id="cl3" gradientUnits="objectBoundingBox" x1="1" y1="0" x2="0" y2="1">
-    <stop stop-color="#9b5e67"/>
-    <stop offset="100%" stop-color="#9c787a"/>
-  </linearGradient>
-  <linearGradient id="cl4" gradientUnits="objectBoundingBox" x1="1" y1="1" x2="0" y2="0">
-    <stop stop-color="#9c787a"/>
-    <stop offset="100%" stop-color="#817a94"/>
-  </linearGradient>
-  <linearGradient id="cl5" gradientUnits="objectBoundingBox" x1="0" y1="1" x2="0" y2="0">
-    <stop stop-color="#817a94"/>
-    <stop offset="100%" stop-color="#498a98"/>
-  </linearGradient>
-  <linearGradient id="cl6" gradientUnits="objectBoundingBox" x1="0" y1="1" x2="1" y2="0">
-    <stop stop-color="#498a98"/>
-    <stop offset="100%" stop-color="#618099"/>
-  </linearGradient>
-</defs>
-</svg>
-
-	<center>
-	<div class="header">
-		<h1>{{data_head}}</h1>
-		<br><br>
-	</div>
-	</center>
-
-	<center>
-	  	<br><a href={{data_link}} rel="nofollow" class="btn btn-warning" target="_blank" onclick="javascript: ga('send', 'event', 'outgoing', 'see-price-button', 'layout-2');" "=""><b>View product on Amazon.com</b></a>
-	</center>
-
-	<body>
-	<br><br>
-
 <center>
-<div class="row">
-
-  	<div class="column">
-    	<fieldset class="orig-rtg">
-
-			<legend align="center"><br>
-				<img src="https://reviewmeta.com/public/imgs/reviewmeta/amazon-corner-logo.png" alt="product name">
-				<br> Reviews:</a></legend>
-
-			<center>
-				<br>
-				<label>{{data_rating}}</label><br>
-				<b>{{data_amount_rating}}</b> <i>Reviews</i>
-				<br><br><br>
-			</center>
-		</fieldset>
-  	</div>
-
-  	<div class="column middle">
-		<center>
-			<ul class="progress">
-
-
-  <li data-name="Rating" data-percent={{rating_100}}> <svg viewBox="-10 -10 220 220">
-    <g fill="none" stroke-width="6" transform="translate(100,100)">
-      <path d="M 0,-100 A 100,100 0 0,1 86.6,-50" stroke="url(#cl1)"/>
-      <path d="M 86.6,-50 A 100,100 0 0,1 86.6,50" stroke="url(#cl2)"/>
-      <path d="M 86.6,50 A 100,100 0 0,1 0,100" stroke="url(#cl3)"/>
-      <path d="M 0,100 A 100,100 0 0,1 -86.6,50" stroke="url(#cl4)"/>
-      <path d="M -86.6,50 A 100,100 0 0,1 -86.6,-50" stroke="url(#cl5)"/>
-      <path d="M -86.6,-50 A 100,100 0 0,1 0,-100" stroke="url(#cl6)"/>
-    </g>
-    </svg> <svg viewBox="-10 -10 220 220">
-    <path d="M200,100 C200,44.771525 155.228475,0 100,0 C44.771525,0 0,44.771525 0,100 C0,155.228475 44.771525,200 100,200 C155.228475,200 200,155.228475 200,100 Z" stroke-dashoffset={{rating_623}}></path>
-    </svg> </li>
-
-			  <br><br>
-		  	<small>potentially natural reviews retained</small>
-		  	<br><br>
-		  </center>
-  	</div>
-
-  	<div class="column">
-    	<fieldset class="adj-rtg">
-			<legend align="center">
-				<img src="https://reviewmeta.com/public/imgs/reviewmeta/amazon-corner-logo.png">
-				<i>Natural</i> Reviews:
-			</legend>
-			<center>
-			<br><br>
-			<label>{{data_adj_rating}}</label><br>
-			<b>{{data_adj_amount_rating}}</b> Reviews
-			<br><br><br>
-			<center>
-		</fieldset>
-  	</div>
-
-	</div>
-</div>
+	<h1>4PCS Tongue Scraper, Stainless Steel Tongue Cleaners, 100% BPA Free Fresher Tongue Tools</h1>
+	<br><br>
 </center>
+
+<body>
+<br><br>
+<div class="row">
+  <div class="column">
+
+	  <center>
+		  <a name="product-image" href="https://smile.amazon.com/dp/B08LGF24MN" rel="nofollow" class="thumbnail" id="product_image" target="_blank" onclick="javascript: ga('send', 'event', 'outgoing', 'prod-img');" style="border:0px !important">
+			  <img src="https://m.media-amazon.com/images/I/41du2Hq80UL._AC_US180_SCLZZZZZZZ__.jpg" id="main_product_image" itemprop="image" alt="Product name"></a>
+		  <br><a href="https://smile.amazon.com/dp/B08LGF24MN" rel="nofollow" class="btn btn-warning" target="_blank" onclick="javascript: ga('send', 'event', 'outgoing', 'see-price-button', 'layout-2');" "=""><b>View product on Amazon.com</b></a>
+	  </center>
+  </div>
+
+  <div class="column">
+    <fieldset class="orig-rtg">
+
+		<legend align="center"><br>
+			<img src="https://reviewmeta.com/public/imgs/reviewmeta/amazon-corner-logo.png" alt="product name">
+			<br> Rating:</a></legend>
+
+		<center>
+			<br>
+			<label>4.6</label><br>
+			<b>5,042</b> <i>Ratings</i>
+			<br><br><br>
+		</center>
+	</fieldset>
+  </div>
+
+  <div class="column middle">
+	  <center>
+		  <br><br>
+		  <small><b><font color="#48BD3A" size="+1">0%</font></b> <br>of<br> potentially unnatural reviews removed </small>
+		  <br><br>
+	  </center>
+  </div>
+
+  <div class="column">
+    <fieldset class="adj-rtg">
+		<legend align="center">
+			<img src="https://reviewmeta.com/public/imgs/reviewmeta/amazon-corner-logo.png">
+			<i>Adjusted</i> Rating:
+		</legend>
+	<center>
+		<br><br>
+		<label>4.6</label><br>
+		<b>5,042</b> Ratings*
+		<br><br><br>
+		<center>
+		</fieldset>
+  </div>
+  </div>
+</div>
 
 <br><br>
+<div>
+    <center>
+    <div class="left">
+        <h3>Trust</h3>
+        <p>Bought in Oct '21. If your TV doesn't have a Disney+ app available, this is a *great* way to get around that - better than using a laptop or some other computer. The volume control doesn't work with our '21 model Hisense 4K TV, but I can live with it. I have never bothered with the gimmick that is voice recognition: navigating menus is fine enough. The remote is super small and frankly, cheap + flimsy. I like the ability to download apps, and it's nice that it has an app to view Twitch (even if interacting with chat is painful, it's fine if you just want something different on in the background). A big bummer is that it needs its own power (and the power form the TV's USB ports won't work), but you'd need to power a laptop etc anyway. Occasionally, the remote won't respond for a couple of seconds, so the device can feel unresponsive. Overall however, worth a buy - especially if you can get a discount.</p>
+    </div>
 
-<center>
-<div class= "comments">
-	<center>
-		<div class="left">
-			<h3>Most Trusted Reviews</h3>
-			<h4>{{data_fact1_pbbt}}</h4>
-        	<p>{{data_fact1}}</p>
-			<h4>{{data_fact2_pbbt}}</h4>
-			<p>{{data_fact2}}</p>
-			<h4>{{data_fact3_pbbt}}</h4>
-			<p>{{data_fact3}}</p>
-			<h4>{{data_fact4_pbbt}}</h4>
-			<p>{{data_fact4}}</p>
-			<h4>{{data_fact5_pbbt}}</h4>
-			<p>{{data_fact5}}</p>
-    	</div>
-
-    	<div class="right">
-        	<h3>Most Unnatural Reviews</h3>
-			<h4>{{data_fake1_pbbt}}</h4>
-        	<p>{{data_fake1}}</p>
-			<h4>{{data_fake2_pbbt}}</h4>
-			<p>{{data_fake2}}</p>
-			<h4>{{data_fake3_pbbt}}</h4>
-			<p>{{data_fake3}}</p>
-			<h4>{{data_fake4_pbbt}}</h4>
-			<p>{{data_fake4}}</p>
-			<h4>{{data_fake5_pbbt}}</h4>
-			<p>{{data_fake5}}</p>
-    	</div>
-	</center>
+    <div class="right">
+        <h3>Fake</h3>
+        <p>Bought in Oct '21. If your TV doesn't have a Disney+ app available, this is a *great* way to get around that - better than using a laptop or some other computer. The volume control doesn't work with our '21 model Hisense 4K TV, but I can live with it. I have never bothered with the gimmick that is voice recognition: navigating menus is fine enough. The remote is super small and frankly, cheap + flimsy. I like the ability to download apps, and it's nice that it has an app to view Twitch (even if interacting with chat is painful, it's fine if you just want something different on in the background). A big bummer is that it needs its own power (and the power form the TV's USB ports won't work), but you'd need to power a laptop etc anyway. Occasionally, the remote won't respond for a couple of seconds, so the device can feel unresponsive. Overall however, worth a buy - especially if you can get a discount.</p>
+    </div>
+    </center>
 </div>
-</center>
-
 </body>

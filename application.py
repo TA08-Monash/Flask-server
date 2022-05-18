@@ -164,7 +164,9 @@ def urlProcesspage():
 
         ##############
         list_fact = []
+        list_fact_pbbt = []
         list_fake = []
+        list_fake_pbbt = []
         list_total_all = 0
         n = 0
         i = 0
@@ -174,49 +176,139 @@ def urlProcesspage():
             list_running = [comment]
             #list_total_all = list_total_all + list_rating[i]
             prediction = text_clf_svm.predict(list_running)
+            probability = np.amax(text_clf_svm.predict_proba(list_running), axis=1)
+            probability_float = float(probability)
+
             if prediction == 'OR':
                 list_fact.append(comment)           #前端调用的真实评论list
+                list_fact_pbbt.append(probability_float)
                 #rating_total = rating_total + list_rating[n]
                 n = n + 1
             if prediction == 'CG':
                 list_fake.append(comment)
+                list_fake_pbbt.append(1-probability_float)
             i = i + 1
 
-    len_fact = len(list_fact)
-    if len(list_fact) < 5:
-        for nums in range(len_fact, 5):
-            list_fact.append(" ")
+    df_fact = pd.DataFrame({"fact_reviews":list_fact, "fact_pbbt":list_fact_pbbt})
+    df_fake = pd.DataFrame({"fake_reviews": list_fake, "fake_pbbt": list_fake_pbbt})
 
-    len_fact = len(list_fake)
-    if len(list_fake) < 10:
-        for nums in range(len_fact, 10):
-            list_fake.append(" ")
+    # sort pbbt in a descending order
+    df_fact.sort_values(by=['fact_pbbt'], inplace=True, ascending=False)
+    df_fake.sort_values(by=['fake_pbbt'], inplace=True)
 
+    sorted_fact = df_fact.values.tolist()
+    sorted_fake = df_fake.values.tolist()
+
+    # check the len of two lists
+    #if len(sorted_fact) < 5:
+    #    for nums in range(len(sorted_fact), 5):
+    #        sorted_fact.append([" ", " "])
+
+    #if len(sorted_fake) < 5:
+    #    for nums in range(len(sorted_fake), 5):
+    #        sorted_fake.append([" ", " "])
+
+    # try fact
+    try:
+        fact1 = sorted_fact[0][0]
+        fact1_pbbt = "The probability: " + str(round(sorted_fact[0][1] * 100, 1)) + "%"
+    except:
+        fact1 = " "
+        fact1_pbbt = " "
+
+    try:
+        fact2 = sorted_fact[1][0]
+        fact2_pbbt = "The probability: " + str(round(sorted_fact[1][1] * 100, 1)) + "%"
+    except:
+        fact2 = " "
+        fact2_pbbt = " "
+
+    try:
+        fact3 = sorted_fact[2][0]
+        fact3_pbbt = "The probability: " + str(round(sorted_fact[2][1] * 100, 1)) + "%"
+    except:
+        fact3 = " "
+        fact3_pbbt = " "
+
+    try:
+        fact4 = sorted_fact[3][0]
+        fact4_pbbt = "The probability: " + str(round(sorted_fact[3][1] * 100, 1)) + "%"
+    except:
+        fact4 = " "
+        fact4_pbbt = " "
+
+    try:
+        fact5 = sorted_fact[4][0]
+        fact5_pbbt = "The probability: " + str(round(sorted_fact[4][1] * 100, 1)) + "%"
+    except:
+        fact5 = " "
+        fact5_pbbt = " "
+
+    # Try fake
+    try:
+        fake1 = sorted_fake[0][0]
+        fake1_pbbt = "The probability: " + str(round(sorted_fake[0][1] * 100, 1)) + "%"
+    except:
+        fake1 = " "
+        fake1_pbbt = " "
+
+    try:
+        fake2 = sorted_fake[1][0]
+        fake2_pbbt = "The probability: " + str(round(sorted_fake[1][1] * 100, 1)) + "%"
+    except:
+        fake2 = " "
+        fake2_pbbt = " "
+
+    try:
+        fake3= sorted_fake[2][0]
+        fake3_pbbt = "The probability: " + str(round(sorted_fake[2][1] * 100, 1)) + "%"
+    except:
+        fake3 = " "
+        fake3_pbbt = " "
+
+    try:
+        fake4 = sorted_fake[3][0]
+        fake4_pbbt = "The probability: " + str(round(sorted_fake[3][1] * 100, 1)) + "%"
+    except:
+        fake4 = " "
+        fake4_pbbt = " "
+
+    try:
+        fake5 = sorted_fake[4][0]
+        fake5_pbbt = "The probability: " + str(round(sorted_fake[4][1] * 100, 1)) + "%"
+    except:
+        fake5 = " "
+        fake5_pbbt = " "
 
 ##############
-        return render_template("resultUrl.html",
-                               data_head=product_title,
-                               data_picture=product_pic_link,
-                               data_link=url,
-                               data_amount_rating=i,
-                               data_adj_amount_rating=n,
-                               data_fact1=list_fact[0],
-                               data_fact2=list_fact[1],
-                               data_fact3=list_fact[2],
-                               data_fact4=list_fact[3],
-                               data_fact5=list_fact[4],
-                               data_fake1=list_fake[0],
-                               data_fake2=list_fake[1],
-                               data_fake3=list_fake[2],
-                               data_fake4=list_fake[3],
-                               data_fake5=list_fake[4],
-                               data_fake6=list_fake[5],
-                               data_fake7=list_fake[6],
-                               data_fake8=list_fake[7],
-                               data_fake9=list_fake[8],
-                               data_fake10=list_fake[9],
-                               rating_100=round(n/i * 100, 1),
-                               rating_623=(round(n/i, 1) * 623))  # 调用render_template函数，传入html文件参数
+    return render_template("resultUrl.html",
+                            data_head=product_title,
+                            data_picture=product_pic_link,
+                            data_link=url,
+                            data_amount_rating=i,
+                            data_adj_amount_rating=n,
+                            data_fact1=fact1,
+                            data_fact2=fact2,
+                            data_fact3=fact3,
+                            data_fact4=fact4,
+                            data_fact5=fact5,
+                            data_fact1_pbbt=fact1_pbbt,
+                            data_fact2_pbbt=fact2_pbbt,
+                            data_fact3_pbbt=fact3_pbbt,
+                            data_fact4_pbbt=fact4_pbbt,
+                            data_fact5_pbbt=fact5_pbbt,
+                            data_fake1=fake1,
+                            data_fake2=fake2,
+                            data_fake3=fake3,
+                            data_fake4=fake4,
+                            data_fake5=fake5,
+                            data_fake1_pbbt=fake1_pbbt,
+                            data_fake2_pbbt=fake2_pbbt,
+                            data_fake3_pbbt=fake3_pbbt,
+                            data_fake4_pbbt=fake4_pbbt,
+                            data_fake5_pbbt=fake5_pbbt,
+                            rating_100=round(n/i * 100, 1),
+                            rating_623=(round(n/i, 1) * 623))  # 调用render_template函数，传入html文件参数
 
 
 @application.route('/loginProcess',methods=['POST','GET'])
