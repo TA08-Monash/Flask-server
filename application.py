@@ -10,15 +10,14 @@ from selectorlib import Extractor
 import re
 import requests
 from bs4 import BeautifulSoup
+import pickle
+import random
 
 application = Flask(__name__)
 
 
 # Create an Extractor by reading from the YAML file
 e = Extractor.from_yaml_file('selectors.yml')
-
-#url = 'https://www.amazon.com.au/Things-Wanted-Say-but-never/dp/B09VFS57HK/ref=pd_rhf_gw_s_pd_crcd_sccl_1_4/357-9763785-0087255?pd_rd_w=NvlyX&pf_rd_p=3773418f-973d-4eab-a18e-142337dd5ace&pf_rd_r=F67H7EF59TQ8634D0Y2M&pd_rd_r=623e4c6a-2e23-4eb7-becd-7d9e625104a2&pd_rd_wg=4t9Hj&pd_rd_i=B09VFS57HK&psc=1'
-#url1 = 'https://www.amazon.com/Long-Walk-Water-Based-Story/dp/0547577311/?_encoding=UTF8&pd_rd_w=NeCTd&pf_rd_p=ba25a0fb-eeb9-4762-9c76-8ca869df5234&pf_rd_r=DW0MXM6SKH8WDYAAS2SZ&pd_rd_r=c9014073-37d7-4d49-869c-e6dacc633794&pd_rd_wg=O9SiM&ref_=pd_gw_exports_top_sellers_unrec'
 
 # scrape reviews
 def scrape(url):
@@ -64,20 +63,24 @@ headers = {
     'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
 }
 
-# ua USA
-# headers1 = {
-#         'authority': 'www.amazon.com',
-#         'pragma': 'no-cache',
-#         'cache-control': 'no-cache',
-#         'dnt': '1',
-#         'upgrade-insecure-requests': '1',
-#         'User-Agent': 'Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36',
-#         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-#         'sec-fetch-site': 'none',
-#         'sec-fetch-mode': 'navigate',
-#         'sec-fetch-dest': 'document',
-#         'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
-#     }
+user_agent = ['Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36',
+              'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1 ',
+             'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20100101 Firefox/6.0 ',
+             'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50 ',
+             'Opera/9.80 (Windows NT 6.1; U; zh-cn) Presto/2.9.168 Version/11.50 ',
+             'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0; .NET CLR 2.0.50727; SLCC2; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; Tablet PC 2.0; .NET4.0E) ',
+             'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; InfoPath.3) ',
+             'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.0) ',
+             'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1) ',
+             'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1) ',
+             'Mozilla/5.0 (Windows; U; Windows NT 6.1; ) AppleWebKit/534.12 (KHTML, like Gecko) Maxthon/3.0 Safari/534.12 ',
+             'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E) ',
+             'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E; SE 2.X MetaSr 1.0) ',
+             'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.33 Safari/534.3 SE 2.X MetaSr 1.0 ',
+             'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E) ',
+             'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.41 Safari/535.1 QQBrowser/6.9.11079.201 ',
+             'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E) QQBrowser/6.9.11079.201 ',
+             'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0) ']
 
 def scrape_Url(input = str,reviewnum= int):
     '''
@@ -85,13 +88,12 @@ def scrape_Url(input = str,reviewnum= int):
     :param reviewnum: reviewnum is the num of review: reviewnum = 1 means only scrape first page's review
     :return:reviews,product_title,product_pic_link
     '''
-    global list_comment, list_rating, product_title, product_pic_link
+    global list_comment, list_rating, product_title
     pattern = re.compile('(?<=www.amazon.).*?(?=/)')
     middleUrl = re.findall(pattern, input)[0]
-    # if middleUrl == 'com':
-    #     response = requests.get(url=url, headers=headers)
-    # else:
-    #     response = requests.get(url=url, headers=headers)
+
+    num = random.randint(0, 17)
+    headers['user-agent'] = user_agent[num]
     response = requests.get(url=input, headers=headers)
 
     # load webpage
@@ -108,13 +110,8 @@ def scrape_Url(input = str,reviewnum= int):
     data = scrape(finalurl)
     reviews = []
 
-    # product_title and product_pic_link
+    # product_title
     product_title = data['product_title']
-    try:
-        product_pic_link = soup.find(name='img', attrs={'class':'a-dynamic-image image-stretch-vertical frontImage',"id":"imgBlkFront"}).attrs['src']
-    except:
-        product_pic_link = ""
-
     reviews = data['reviews']
     i = 0
     while (data['next_page'] != None and i < reviewnum - 1):
@@ -131,10 +128,7 @@ def scrape_Url(input = str,reviewnum= int):
     for review in reviews:
         list_comment.append(review["content"])
 
-    #print(list_comment)
-    #print(list_rating)
-    #global list_comment, list_rating, product_title, product_pic_link
-    return list_comment, product_title, product_pic_link
+    return list_comment, product_title
 
 @application.route('/')
 def index():
@@ -150,31 +144,25 @@ def urlProcesspage():
     if request.method=='POST':
         nm = request.form['nm']
         url = str(nm)    #获取姓名文本框的输入值
-        scrape_Url(url, 2)
-        #nm_list = [nm_string]
+        try:
+            scrape_Url(url, 2)
+        except:
+            return render_template("Error – SmartBuyers.html")
 
         #model
-        df = pd.read_csv('fake reviews dataset.csv')
-        text_clf_svm = Pipeline([('vect', CountVectorizer()),
-                                 ('tfidf', TfidfTransformer()),
-                                 ('clf-svm', CalibratedClassifierCV(SGDClassifier(loss='hinge', penalty='l2',
-                                                                                  alpha=1e-3, random_state=42)))])
-        text_clf_svm.fit(df['text_'], df['label'])
-        ##############
+        with open('static/SGD.pickle', 'rb') as handle:
+            text_clf_svm = pickle.load(handle)
 
         ##############
         list_fact = []
         list_fact_pbbt = []
         list_fake = []
         list_fake_pbbt = []
-        list_total_all = 0
         n = 0
         i = 0
-        rating_total = 0
 
         for comment in list_comment:
             list_running = [comment]
-            #list_total_all = list_total_all + list_rating[i]
             prediction = text_clf_svm.predict(list_running)
             probability = np.amax(text_clf_svm.predict_proba(list_running), axis=1)
             probability_float = float(probability)
@@ -182,7 +170,6 @@ def urlProcesspage():
             if prediction == 'OR':
                 list_fact.append(comment)           #前端调用的真实评论list
                 list_fact_pbbt.append(probability_float)
-                #rating_total = rating_total + list_rating[n]
                 n = n + 1
             if prediction == 'CG':
                 list_fake.append(comment)
@@ -199,115 +186,64 @@ def urlProcesspage():
     sorted_fact = df_fact.values.tolist()
     sorted_fake = df_fake.values.tolist()
 
-    # check the len of two lists
-    #if len(sorted_fact) < 5:
-    #    for nums in range(len(sorted_fact), 5):
-    #        sorted_fact.append([" ", " "])
+    fact_list_render = []
+    if len(sorted_fact) > 4:
+        for num in range(0, 5):
+            fact_list_render.append([sorted_fact[num][0],"Probability: " + str(round(sorted_fact[num][1] * 100, 1)) + "% "])
+    else:
+        for num in range(0,len(sorted_fact)):
+            fact_list_render.append([sorted_fact[num][0], "Probability: " + str(round(sorted_fact[num][1] * 100, 1)) + "% "])
+        for num in range(len(sorted_fact),5):
+            fact_list_render.append([" ", " "])
 
-    #if len(sorted_fake) < 5:
-    #    for nums in range(len(sorted_fake), 5):
-    #        sorted_fake.append([" ", " "])
+    fake_list_render = []
+    if len(sorted_fake) > 4:
+        for num in range(0, 5):
+            fake_list_render.append([sorted_fake[num][0],"Probability " + str(round(sorted_fake[num][1] * 100, 1)) + "% "])
 
-    # try fact
-    try:
-        fact1 = sorted_fact[0][0]
-        fact1_pbbt = "The probability: " + str(round(sorted_fact[0][1] * 100, 1)) + "%"
-    except:
-        fact1 = " "
-        fact1_pbbt = " "
+    else:
+        for num in range(0,len(sorted_fake)):
+            fake_list_render.append([sorted_fake[num][0], "Probability: " + str(round(sorted_fake[num][1] * 100, 1)) + "% ","static/Chat.svg"])
 
-    try:
-        fact2 = sorted_fact[1][0]
-        fact2_pbbt = "The probability: " + str(round(sorted_fact[1][1] * 100, 1)) + "%"
-    except:
-        fact2 = " "
-        fact2_pbbt = " "
-
-    try:
-        fact3 = sorted_fact[2][0]
-        fact3_pbbt = "The probability: " + str(round(sorted_fact[2][1] * 100, 1)) + "%"
-    except:
-        fact3 = " "
-        fact3_pbbt = " "
-
-    try:
-        fact4 = sorted_fact[3][0]
-        fact4_pbbt = "The probability: " + str(round(sorted_fact[3][1] * 100, 1)) + "%"
-    except:
-        fact4 = " "
-        fact4_pbbt = " "
-
-    try:
-        fact5 = sorted_fact[4][0]
-        fact5_pbbt = "The probability: " + str(round(sorted_fact[4][1] * 100, 1)) + "%"
-    except:
-        fact5 = " "
-        fact5_pbbt = " "
-
-    # Try fake
-    try:
-        fake1 = sorted_fake[0][0]
-        fake1_pbbt = "The probability: " + str(round(sorted_fake[0][1] * 100, 1)) + "%"
-    except:
-        fake1 = " "
-        fake1_pbbt = " "
-
-    try:
-        fake2 = sorted_fake[1][0]
-        fake2_pbbt = "The probability: " + str(round(sorted_fake[1][1] * 100, 1)) + "%"
-    except:
-        fake2 = " "
-        fake2_pbbt = " "
-
-    try:
-        fake3= sorted_fake[2][0]
-        fake3_pbbt = "The probability: " + str(round(sorted_fake[2][1] * 100, 1)) + "%"
-    except:
-        fake3 = " "
-        fake3_pbbt = " "
-
-    try:
-        fake4 = sorted_fake[3][0]
-        fake4_pbbt = "The probability: " + str(round(sorted_fake[3][1] * 100, 1)) + "%"
-    except:
-        fake4 = " "
-        fake4_pbbt = " "
-
-    try:
-        fake5 = sorted_fake[4][0]
-        fake5_pbbt = "The probability: " + str(round(sorted_fake[4][1] * 100, 1)) + "%"
-    except:
-        fake5 = " "
-        fake5_pbbt = " "
-
+        for num in range(len(sorted_fake),5):
+            fake_list_render.append([" ", " ","http://smartbuyers.ml/wp-content/uploads/2022/05/nomore.png"])
 ##############
+
+    #return render_template("template.html",
     return render_template("resultUrl.html",
                             data_head=product_title,
-                            data_picture=product_pic_link,
                             data_link=url,
                             data_amount_rating=i,
                             data_adj_amount_rating=n,
-                            data_fact1=fact1,
-                            data_fact2=fact2,
-                            data_fact3=fact3,
-                            data_fact4=fact4,
-                            data_fact5=fact5,
-                            data_fact1_pbbt=fact1_pbbt,
-                            data_fact2_pbbt=fact2_pbbt,
-                            data_fact3_pbbt=fact3_pbbt,
-                            data_fact4_pbbt=fact4_pbbt,
-                            data_fact5_pbbt=fact5_pbbt,
-                            data_fake1=fake1,
-                            data_fake2=fake2,
-                            data_fake3=fake3,
-                            data_fake4=fake4,
-                            data_fake5=fake5,
-                            data_fake1_pbbt=fake1_pbbt,
-                            data_fake2_pbbt=fake2_pbbt,
-                            data_fake3_pbbt=fake3_pbbt,
-                            data_fake4_pbbt=fake4_pbbt,
-                            data_fake5_pbbt=fake5_pbbt,
-                            rating_100=round(n/i * 100, 1),
+                            data_fake_amount=i-n,
+                            data_fact1=fact_list_render[0][0],
+                            data_fact2=fact_list_render[1][0],
+                            data_fact3=fact_list_render[2][0],
+                            data_fact4=fact_list_render[3][0],
+                            data_fact5=fact_list_render[4][0],
+                            data_fact1_pbbt=fact_list_render[0][1],
+                            data_fact2_pbbt=fact_list_render[1][1],
+                            data_fact3_pbbt=fact_list_render[2][1],
+                            data_fact4_pbbt=fact_list_render[3][1],
+                            data_fact5_pbbt=fact_list_render[4][1],
+                            data_fake1=fake_list_render[0][0],
+                            data_fake2=fake_list_render[1][0],
+                            data_fake3=fake_list_render[2][0],
+                            data_fake4=fake_list_render[3][0],
+                            data_fake5=fake_list_render[4][0],
+                            data_fake1_pbbt=fake_list_render[0][1],
+                            data_fake2_pbbt=fake_list_render[1][1],
+                            data_fake3_pbbt=fake_list_render[2][1],
+                            data_fake4_pbbt=fake_list_render[3][1],
+                            data_fake5_pbbt=fake_list_render[4][1],
+                            rating_100=str(round(n/i * 100, 0))+"%",
+                            comment_pics="static/Chat.svg",
+                            comment_pic1=fake_list_render[0][2],
+                            comment_pic2=fake_list_render[1][2],
+                            comment_pic3=fake_list_render[2][2],
+                            comment_pic4=fake_list_render[3][2],
+                            comment_pic5=fake_list_render[4][2],
+                            rating_percentage="c100 p"+str(int(round(n/i * 100, 1))),
                             rating_623=(round(n/i, 1) * 623))  # 调用render_template函数，传入html文件参数
 
 
